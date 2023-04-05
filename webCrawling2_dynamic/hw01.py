@@ -40,6 +40,7 @@ from urllib.request import urlretrieve
 #urlretrieve: 해당 함수를 통해 바로 파일에 자료 입력 가능
 
 i=0 #img 저장 이름을 위한 변수
+
 for src in url_thumbnail: #저장 된 src마다
     i+=1
     urlretrieve(src,folder_path+f'{i}.jpg')
