@@ -57,7 +57,7 @@ for date in dateList1:
     dateList2.append(date.get_attribute('innerText')[:10]) #발매 연도 + 월 + 일까지 슬라이싱 해 추가
 # print("date: ",dateList2[:3])
 
-# 5.발매 타입 : 다운로드 / 칩 /체험판 여부
+# 5.발매 타입 : 다운로드 / 패키지 /체험판 여부
 typeList2=[] #요소의 text를 저장할 배열 
 idxList=[] #슬라이싱을 위한 인덱스 배열
 resList=[] #슬라이싱을 적용한 결과 배열
