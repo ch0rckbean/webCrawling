@@ -55,7 +55,9 @@ time.sleep(2)
 
 ###youtube 공식 계정 페이지 접속
 for i in range(0,2): #스크롤
-    driver.find_element(By.TAG_NAME,'body').send_keys(Keys.PAGE_DOWN)
+    driver.find_element(By.TAG_NAME,'body').send_keys(Keys.END)
+        # actions.send_keys(Keys.END).perform()
+
 
 ###비디오 링크 읽어오기
 vdoList=driver.find_elements(By.CLASS_NAME,'yt-simple-endpoint.inline-block.style-scope.ytd-thumbnail') 
@@ -64,9 +66,9 @@ urlList=[]
 for vdo in vdoList:
     vdoHref=vdo.get_attribute('href')
     urlList.append(vdoHref)
-for url in urlList:
-    if 'None' in url: #리스트 내 None 값 확인
-        urlList.remove(url) #제거
+# for url in urlList:
+#     if 'None' in url: #리스트 내 None 값 확인
+#         urlList.remove(url) #제거
 print("url: ",urlList)
 
 folder_path='./videos/' #동영상을 저장할 경로
@@ -74,7 +76,8 @@ folder_path='./videos/' #동영상을 저장할 경로
 ###video title 읽어오기
 vdoTitle=driver.find_elements(By.ID,'video-title')
 for title in vdoTitle: #영상 제목을 받아올 코드
-    araLb=title.get_attribute('aria-label')
+    # print(title)
+    araLb=title.get_attribute('title')
 print("ara: ",araLb)
 
 # for i in range(0,10): #비디오 10개 저장 예정
