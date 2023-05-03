@@ -8,10 +8,12 @@ import time
 from urllib.request import urlretrieve
 # https://www.youtube.com/channel/UCkH3CcMfqww9RsZvPRPkAJA
 
+userAgent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Whale/3.19.166.16 Safari/537.36'
 serv=Service('C:/pythontemp/chromedriver')
 opt=Options()
 opt.add_experimental_option("detach",True)
 opt.add_experimental_option("excludeSwitches",["enable-logging"]) 
+opt.add_argument(f'user-agent={userAgent}') #보안 이슈를 피하기 위한 userAgent 추가
 
 url='https://www.nintendo.co.jp/'
 
@@ -69,18 +71,22 @@ for vdo in vdoList:
     if vdoHref:
         urlList.append(vdoHref)
 print("url: ",urlList)
+print(len(urlList))
 
 ###동영상 저장하기
 folder_path='./videos/' #동영상을 저장할 경로
 
-i=1
+i=0
 for link in urlList:
-    i+=0
-    urlretrieve(link,f'{folder_path}{i}.mp4')
+    i+=1
+    urlretrieve(link,f'{i}.mp4')
     if i==10:
         break
 print(i)
-
+import os
+cwd=os.getcwd()
+os.chdir(cwd+'/webCrawling3_nintendo/')
+print(os.getcwd())
 # ###video title 읽어오기 : 작동 x
 # vdoTitle=driver.find_elements(By.ID,'video-title')
 # for title in vdoTitle: #영상 제목을 받아올 코드

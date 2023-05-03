@@ -4,9 +4,9 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-userAgent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Whale/3.19.166.16 Safari/537.36'
 from urllib.request import urlretrieve
 import time
+userAgent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Whale/3.19.166.16 Safari/537.36'
 
 serv=Service('C:/pythontemp/chromedriver')
 opt=Options()
@@ -20,7 +20,7 @@ driver.get(url) #url로 이동
 
 time.sleep(10) #동영상 로딩을 기다리는 시간
 
-xpath_list=driver.find_elements(By.XPATH,'//div[@class="VYkpsb"]/video') #동영상을 포함하는 div의 클래스를 명시하는 xpath 찾기
+# xpath_list=driver.find_elements(By.XPATH,'//div[@class="VYkpsb"]/video') #동영상을 포함하는 div의 클래스를 명시하는 xpath 찾기
 # video_list=driver.find_elements(By.TAG_NAME,('video')) #동작 x
 # a_list=driver.find_elements(By.TAG_NAME,'a') #a 태그를 찾음
 iframe_list=driver.find_elements(By.TAG_NAME,('iframe')) #동영상을 포함한 iframe 요소를 찾음
@@ -32,27 +32,27 @@ class_list=driver.find_elements(By.CLASS_NAME,('VYkpsb')) #동영상을 포함�
 #왜 비디오가 중복으로 크롤링 되는지
 
 url_list=[] #영상의 src를 저장할 리스트 선언
-for xpath in xpath_list: #xpath로 가져온 요소들만큼 반복문이 돎
-    src = xpath.get_attribute('src') #xpath 내 src 가져옴
-    if src: #src라면
-        url_list.append(src) #리스트에 저장
+# for xpath in xpath_list: #xpath로 가져온 요소들만큼 반복문이 돎
+#     src = xpath.get_attribute('src') #xpath 내 src 가져옴
+#     if src: #src라면
+#         url_list.append(src) #리스트에 저장
         
 # for a in a_list: #a 태그로 가져온 요소들만큼 반복문이 돎
 #     href=a.get_attribute('href') #a 태그의 링크를 걸어주는 href 찾기
 #     if href and (href.startswith("https://www.youtube.com") or href.startswith("https://youtu.be")):
 #         url_list.append(href) #href이고, 해당 링크로 href가 시작한다면 리스트에 href 추가
         
-for iframe in iframe_list: #iframe으로 요소를 가져온만큼 반복문이 돎 
-    driver.switch_to.frame(iframe) # 해당 iframe으로 전환
-    time.sleep(10) #iframe으로의 전환을 기다리는 시간
-    iframeVdo_list = driver.find_elements(By.TAG_NAME, 'video') # iframe 내부에서 video 태그 찾기 
+# for iframe in iframe_list: #iframe으로 요소를 가져온만큼 반복문이 돎 
+#     driver.switch_to.frame(iframe) # 해당 iframe으로 전환
+#     time.sleep(10) #iframe으로의 전환을 기다리는 시간
+#     iframeVdo_list = driver.find_elements(By.TAG_NAME, 'video') # iframe 내부에서 video 태그 찾기 
     
-    for iframeVdo in iframeVdo_list: #iframe 내 video에서 반복문 실행
-        src = iframeVdo.get_attribute('currentSrc') 
-        #iframe 내 video에서 currentSrc 찾기. currentSrc: 현 비디오의 src 반환. 빈 속성이라면, 빈 값 반환
-        if src: #src라면
-            url_list.append(src) #리스트에 추가
-    driver.switch_to.default_content()  #원래 페이지로 돌아옴
+#     for iframeVdo in iframeVdo_list: #iframe 내 video에서 반복문 실행
+#         src = iframeVdo.get_attribute('currentSrc') 
+#         #iframe 내 video에서 currentSrc 찾기. currentSrc: 현 비디오의 src 반환. 빈 속성이라면, 빈 값 반환
+#         if src: #src라면
+#             url_list.append(src) #리스트에 추가
+#     driver.switch_to.default_content()  #원래 페이지로 돌아옴
        
 for classes in class_list:
     dataUrl = classes.get_attribute('data-url') #div 내 data-url을 추출
