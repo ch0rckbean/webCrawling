@@ -6,6 +6,7 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 import time
 from urllib.request import urlretrieve
+# https://www.youtube.com/channel/UCkH3CcMfqww9RsZvPRPkAJA
 
 serv=Service('C:/pythontemp/chromedriver')
 opt=Options()
@@ -65,22 +66,26 @@ urlList=[]
 # print(vdoList)
 for vdo in vdoList:
     vdoHref=vdo.get_attribute('href')
-    urlList.append(vdoHref)
-# for url in urlList:
-#     if 'None' in url: #리스트 내 None 값 확인
-#         urlList.remove(url) #제거
+    if vdoHref:
+        urlList.append(vdoHref)
 print("url: ",urlList)
 
+###동영상 저장하기
 folder_path='./videos/' #동영상을 저장할 경로
 
-###video title 읽어오기
-vdoTitle=driver.find_elements(By.ID,'video-title')
-for title in vdoTitle: #영상 제목을 받아올 코드
-    # print(title)
-    araLb=title.get_attribute('title')
-print("ara: ",araLb)
+i=1
+for link in urlList:
+    i+=0
+    urlretrieve(link,f'{folder_path}{i}.mp4')
+    if i==10:
+        break
+print(i)
 
-# for i in range(0,10): #비디오 10개 저장 예정
-#     for link in urlList:
-#         urlretrieve(link,folder_path+)
+# ###video title 읽어오기 : 작동 x
+# vdoTitle=driver.find_elements(By.ID,'video-title')
+# for title in vdoTitle: #영상 제목을 받아올 코드
+#     # print(title)
+#     araLb=title.get_attribute('title')
+# print("ara: ",araLb)
+
 driver.quit()
