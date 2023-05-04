@@ -57,10 +57,9 @@ time.sleep(2)
 # socialBtns[53].send_keys(Keys.ENTER)
 
 ###youtube 공식 계정 페이지 접속
-for i in range(0,2): #스크롤
+for i in range(0,2): #스크롤:유튜브는 끝까지 내려야 함
     driver.find_element(By.TAG_NAME,'body').send_keys(Keys.END)
         # actions.send_keys(Keys.END).perform()
-
 
 ###비디오 링크 읽어오기
 vdoList=driver.find_elements(By.CLASS_NAME,'yt-simple-endpoint.inline-block.style-scope.ytd-thumbnail') 
