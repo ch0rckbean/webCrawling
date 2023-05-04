@@ -34,7 +34,7 @@ nameList1=driver.find_elements(By.CLASS_NAME,'tit') #tit class의 모든 요소�
 for name in nameList1: #리스트 내 요소마다
     nameList2.append(name.get_attribute('innerText')) #text를 읽어와 배열에 추가
 # print(nameList2[:3])
-
+    
 # 2.이미지 링크 
 srcList=[] #이미지 링크를 읽어와 저장할 빈 배열 선언
 imgList=driver.find_elements(By.XPATH,'//*[@id="switem20"]/a/img')
@@ -68,22 +68,24 @@ for type in typeList1: #요소마다
     typeList2.append(type.get_attribute('innerText')) #text를 읽어와 두번째 배열에 추가
     
 for i in range(len(typeList2)): #text마다
-    if (typeList2[i])=='DL': #모든 게임은 DL + (optional) PK, 체험판 형태로 배포되므로 DL 기준으로 슬라이싱 할 것
+    if (typeList2[i])=='DL' : #모든 게임은 DL + (optional) PK, 체험판 형태로 배포되므로 DL 기준으로 슬라이싱 할 것
         idxList.append(i) #DL이 나온다면 다음 게임인 것. => 인덱스 리스트엔 DL의 인덱스(다음 게임의 기준이 되는 정보)가 담김
-if typeList2[-1]=='DL': # 마지막 발매 타입이 DL이라면
+if typeList2[-1]=='DL' or  typeList2[-1]=='체험판': # 마지막 발매 타입이 DL이라면
     idxList.append(len(typeList2)-1) #인덱스 리스트에 마지막 게임의 인덱스 추가
 for idx in idxList:
     if idx >= start: #인덱스가 시작 변수보다 크거나 같다면
-        resList.append(typeList2[start:idx+1]) #시작부터 인덱스 +1 까지 슬라이싱
+        resList.append(typeList2[start:idx+1]) #시작부터 인덱스 +1 까지 슬라이싱(DL인 인덱스 전까지)
         start=idx+1 #시작 변수를 인덱스 다음으로 재선언 해야 중복이 안 일어남
-if start < len(typeList2): #시작 변수가 총 발매 타입이 담긴 리스트의 길이보다 적다면 == 아직 슬라이싱 할 게 남았다면 + 더 이상 리스트에 DL이 없이 PK | 체험판이라면
-    resList.append(typeList2[start:]) #나머지를 각각 슬라이싱 해 추가
+# if start < len(typeList2): #시작 변수가 총 발매 타입이 담긴 리스트의 길이보다 적다면 == 아직 슬라이싱 할 게 남았다면 + 더 이상 리스트에 DL이 없이 PK | 체험판이라면
+#     resList.append(typeList2[start:]) #나머지를 각각 슬라이싱 해 추가
 
 driver.quit()
-print(idxList)
-print(resList)
-print(len(resList))
-print(len(nameList2))
+# print(nameList2, len(nameList2))
+# print(compList2,len(compList2))
+# print(dateList2,len(dateList2))
+# print(srcList,len(srcList))
+print(resList,len(resList))
+# print(len(nameList2))
 # print("type: ",typeList2)
     
 ### csv 형태로 저장
@@ -97,5 +99,5 @@ datas=pd.DataFrame( #pandas를 통해 col : row 형식의 데이터 프레임을
     }
 )
 print(datas.head(3))
-datas.to_csv("C:\pythontemp\VentureStartup\webCrawling3_nintendo\gameInfo.csv",encoding='utf-8-sig')
+datas.to_csv(".\\csv\\1.gameInfo.csv",encoding='utf-8-sig')
 #to_csv(저장경로/저장명.확장자, 인코딩)

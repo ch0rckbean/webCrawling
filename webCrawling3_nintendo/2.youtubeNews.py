@@ -74,7 +74,7 @@ print("url: ",urlList)
 print(len(urlList))
 
 ###동영상 저장하기
-folder_path='./videos/' #동영상을 저장할 경로
+folder_path='./video/' #동영상을 저장할 경로
 
 i=0
 for link in urlList:
