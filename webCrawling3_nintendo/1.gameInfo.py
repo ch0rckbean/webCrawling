@@ -21,7 +21,7 @@ time.sleep(3) #로딩 시간 주기
 
 moreBtn=driver.find_element(By.CLASS_NAME,('btn_softwareAllView')).send_keys(Keys.ENTER) #SW 전체 보기 버튼 클릭
 
-# 게임 정보로 스크롤
+### 게임 정보로 스크롤
 scr=driver.find_elements(By.XPATH,'//*[@id="switem20"]/p[1]') #스크롤해 내려갈 요소 선언
 ac=ActionChains(driver) 
 ac.move_to_element(scr[13]).perform() #스크롤 하기
@@ -91,11 +91,10 @@ datas=pd.DataFrame( #pandas를 통해 col : row 형식의 데이터 프레임을
     {
         "타이틀": nameList2,
         "제작사": compList2,
-        "이미지 링크": srcList,
+        "이미지링크": srcList,
         "발매일": dateList2,
         # "발매 타입": resList
     }
 )
-print(datas.head(3))
-datas.to_csv(".\\csv\\1.gameInfo.csv",encoding='utf-8-sig')
-# to_csv(저장경로/저장명.확장자, 인코딩)
+# print(datas.head(3))
+datas.to_csv(".\\csv\\1.gameInfo.csv",encoding='utf-8-sig') # to_csv(저장경로/저장명.확장자, 인코딩)
