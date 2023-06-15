@@ -19,43 +19,54 @@ driver.get(url) #url을 읽어옴
 
 time.sleep(3) #로딩 시간 주기
 
-moreBtn=driver.find_element(By.CLASS_NAME,('btn_softwareAllView')).send_keys(Keys.ENTER) #SW 전체 보기 버튼 클릭
+#SW 전체 보기 버튼 클릭 : 다음 버튼으로 인해 스크롤 코드 주석처리
+moreBtn=driver.find_element(By.CLASS_NAME,('nc3-a-textLink.nc3-a-textLink--white.nc3-js-smoothScroll')).send_keys(Keys.ENTER) 
 
-### 게임 정보로 스크롤
-scr=driver.find_elements(By.XPATH,'//*[@id="switem20"]/p[1]') #스크롤해 내려갈 요소 선언
-ac=ActionChains(driver) 
-ac.move_to_element(scr[13]).perform() #스크롤 하기
-# driver.execute_script("window.scrollTo(0,window.innerHeight/2)")
+# ### 게임 정보로 스크롤 :사이트 내 html 구조 변경으로 인해 해당 코드 주석처리
+# scr=driver.find_elements(By.XPATH,'//*[@id="switem20"]/p[1]') #스크롤해 내려갈 요소 선언
+# ac=ActionChains(driver) 
+# ac.move_to_element(scr[13]).perform() #스크롤 하기
+# # driver.execute_script("window.scrollTo(0,window.innerHeight/2)")
 
 ###게임 정보 크롤링
 # 1.이름
 nameList2=[] #이름 text를 읽어와 저장할 빈 배열 선언
-nameList1=driver.find_elements(By.CLASS_NAME,'tit') #tit class의 모든 요소를 가져와 리스트를 만듦
+nameList1=driver.find_elements(By.CLASS_NAME,'ncmn-softUnit__name') 
+#ncmn-softUnit__name의 모든 요소를 가져와 리스트를 만듦
 for name in nameList1: #리스트 내 요소마다
     nameList2.append(name.get_attribute('innerText')) #text를 읽어와 배열에 추가
-# print(nameList2[:3])
+print(nameList2[:3])
     
 # 2.이미지 링크 
 srcList=[] #이미지 링크를 읽어와 저장할 빈 배열 선언 
-imgList=driver.find_elements(By.XPATH,'//*[@id="switem20"]/a/img')
+imgList=driver.find_elements(By.CLASS_NAME,'ncmn-thumb')
 for img in imgList: #읽어온 이미지마다
-    src=img.get_attribute('src') #src요소를 찾아서
+    src=img.get_attribute('style') #src요소를 찾아서 
+    src=src[23:-3]  #html 구조 변경으로 인해 슬라이싱 추가
     srcList.append(src) #빈 배열에 추가
-# print("src: ",srcList) 
+print("src: ",srcList) 
    
-# 3.제작사
-compList2=[] #제작사 정보를 읽어와 저장할 빈 배열 선언
-compList1=driver.find_elements(By.CLASS_NAME,'releaseInfo') #이 요소에는 발매일 + 제작사 정보가 함께 있으므로
-for comp in compList1: # 요소마다
-    compList2.append(comp.get_attribute('innerText')[12:]) #발매 연도 + 월 + 일 후부터 슬라이싱 해 추가
+# # 3.제작사: 사이트 내 html 구조 변경으로 인해 주석처리 + 배급사로 변경
+# compList2=[] #제작사 정보를 읽어와 저장할 빈 배열 선언
+# compList1=driver.find_elements(By.CLASS_NAME,'releaseInfo') #이 요소에는 발매일 + 제작사 정보가 함께 있으므로
+# for comp in compList1: # 요소마다
+#     compList2.append(comp.get_attribute('innerText')[12:]) #발매 연도 + 월 + 일 후부터 슬라이싱 해 추가
 # print("comp: ",compList2[:3])
+
+# 3.배급사: 사이트 내 html 구조 변경으로 인해 제작사 => 배급사로 변경
+publisherList2=[] #배급사 정보를 읽어와 저장할 빈 배열 선언
+publisherList1=driver.find_elements(By.CLASS_NAME,'ncmn-softUnit__publisher') 
+for pub in publisherList1:
+    publisherList2.append(pub.get_attribute('innerText'))
+print("publisher: ",publisherList2[:3])
 
 # 4.발매일  
 dateList2=[]
-dateList1= driver.find_elements(By.CLASS_NAME,'releaseInfo') 
+dateList1= driver.find_elements(By.CLASS_NAME,'ncmn-softUnit__release') 
 for date in dateList1:
-    dateList2.append(date.get_attribute('innerText')[:10]) #발매 연도 + 월 + 일까지 슬라이싱 해 추가
-# print("date: ",dateList2[:3])
+    # dateList2.append(date.get_attribute('innerText')[:10]) #발매 연도 + 월 + 일까지 슬라이싱 해 추가
+    dateList2.append(date.get_attribute('innerText')) #html 구조 변경으로 인해 슬라이싱 불필요
+print("date: ",dateList2[:3])
 
 # # 5.발매 타입 : 다운로드 / 패키지 /체험판 여부
 # typeList2=[] #요소의 text를 저장할 배열 
@@ -81,16 +92,16 @@ for date in dateList1:
 #     resList.append(typeList2[start:]) #나머지를 각각 슬라이싱 해 추가
 
 driver.quit()
-# print(nameList2, len(nameList2))
-# print(compList2,len(compList2))
-# print(dateList2,len(dateList2))
-# print(srcList,len(srcList))
+print(nameList2, len(nameList2))
+print(publisherList2,len(publisherList2))
+print(dateList2,len(dateList2))
+print(srcList,len(srcList))
     
 ### csv 형태로 저장
 datas=pd.DataFrame( #pandas를 통해 col : row 형식의 데이터 프레임을 만듦
     {
         "타이틀": nameList2,
-        "제작사": compList2,
+        "배급사": publisherList2,
         "이미지링크": srcList,
         "발매일": dateList2,
         # "발매 타입": resList

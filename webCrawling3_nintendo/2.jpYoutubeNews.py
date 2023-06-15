@@ -78,13 +78,15 @@ print(len(titleList))
 transList=[]
 translator=gt.Translator()
 for i in range(len(titleList)):
+    print(titleList[i])
+    print("len(titleList)",len(titleList))
     if titleList[i] is not None: #JSON 에러를 피하기 위해
         korean=translator.translate(titleList[i],dest="ko")
         transList.append(korean)
 
 for i in range(len(transList)):
     transList[i]=transList[i].text
-print(len(transList))
+# print("len(transList)",len(transList))
 # print(transList)
 
 ##2.비디오 시청 링크 읽어오기
@@ -99,7 +101,7 @@ for vdoBox in vdoBoxList:
         hrefList.append(vdoHref)
 # hrefList2=list(OrderedDict.fromkeys(hrefList))
 # print(len(hrefList))
-print("url: ",hrefList)
+# print("url: ",hrefList)
 
 ##3.조회수 읽어오기
 cntList=driver.find_elements(By.CSS_SELECTOR,'#metadata-line > span:nth-child(1)')
