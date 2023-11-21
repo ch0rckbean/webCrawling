@@ -32,9 +32,6 @@
 
 최종적으로는 컨텐츠에 대한 다학제적 접근을 목표로 함.
 
-### 사용 기술
-
-Python, Selenium, WebDriver, Time, GoogleTrans
 
 ### **프로젝트 설계 과정**
 
@@ -58,6 +55,9 @@ Python, Selenium, WebDriver, Time, GoogleTrans
 
 2023.5.1~ 2023.5.7 
 
+### 사용 기술
+
+Python, Selenium, WebDriver, Time, GoogleTrans
 
 ## 내용
 
