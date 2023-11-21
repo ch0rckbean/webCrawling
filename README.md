@@ -32,6 +32,9 @@
 
 최종적으로는 컨텐츠에 대한 다학제적 접근을 목표로 함.
 
+### 사용 기술
+
+Python, Selenium, WebDriver, Time, GoogleTrans
 
 ### **프로젝트 설계 과정**
 
@@ -87,9 +90,6 @@
 ![image](https://github.com/ch0rckbean/webCrawling/assets/86273626/14246a72-bf5a-459c-a2d2-b1845412d341)
 
 
-### 사용 기술
-
-Python, Selenium, WebDriver, Time, GoogleTrans
 
 ### 성과
 
