@@ -59,7 +59,7 @@
 
 ### 사용 기술
 
-Python, Selenium, WebDriver, Time, GoogleTrans
+Python, Selenium, WebDriver, Time, GoogleTrans, Pandas 
 
 ## 내용
 
